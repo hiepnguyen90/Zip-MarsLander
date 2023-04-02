@@ -10,6 +10,7 @@ public class DescentEvent {
         this.Velocity = sp;
         this.Fuel = f;
         this.Altitude = h;
+        this.Status = st;
     }
 
     public int getVelocity() {
@@ -19,7 +20,23 @@ public class DescentEvent {
     public int getAltitude() {
         return this.Altitude;
     }
-    public int getStatus() { return this.Status; }
+    public int getStatus() {
+        if (this.Altitude <= 0) {
+            if (this.Velocity > 10) {
+                this.Status = Vehicle.DEAD;
+            }
+            if (this.Velocity < 10 && this.Velocity > 3) {
+                this.Status = Vehicle.CRASHED;
+            }
+            if (this.Velocity < 3) {
+                this.Status = Vehicle.SUCCESS;
+            }
+        } else {
+            if (this.Altitude > 0) {
+                this.Status = Vehicle.EMPTYFUEL;
+            } }
+        return this.Status;
+    }
     @Override
     public String toString() {
         String s = this.Seconds +"\t\t" + this.Velocity + " \t\t" + this.Fuel + " \t\t" + this.Altitude;
